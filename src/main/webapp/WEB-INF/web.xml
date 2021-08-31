@@ -1,0 +1,16 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <description>Sample Web Application to demonstrate how to build and deploy custom Web Apps on PPM Server</description>
+  <display-name>PPM Custom War Sample</display-name>
+  <servlet>
+    <servlet-name>custom-war-to-ppm-server-call</servlet-name>
+    <servlet-class>com.ppm.custom.war.servlet.CustomWarToPpmCallServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>custom-war-to-ppm-server-call</servlet-name>
+    <url-pattern>/serverCallToPpmServer/*</url-pattern>
+  </servlet-mapping>
+</web-app>
