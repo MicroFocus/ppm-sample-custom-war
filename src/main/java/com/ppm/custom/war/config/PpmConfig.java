@@ -1,5 +1,6 @@
 package com.ppm.custom.war.config;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
@@ -93,8 +94,11 @@ public class PpmConfig {
 
     private Connection getConnection(String jndiName) {
         try {
-            InitialContext ctx = new InitialContext();
-            DataSource ds = (DataSource) ctx.lookup(getProperty(jndiName));
+            Context ctx = new InitialContext();
+            DataSource ds = (DataSource) ctx.lookup(jndiName);
+            if (ds == null) {
+                throw new RuntimeException("Failed to retrieve JNDI Datasource from "+jndiName);
+            }
             return ds.getConnection();
         } catch (Exception e) {
             throw new RuntimeException("Error while retrieving DB connection from JNDI name " + jndiName, e);
