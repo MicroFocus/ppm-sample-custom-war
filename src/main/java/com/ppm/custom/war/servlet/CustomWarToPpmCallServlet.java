@@ -17,9 +17,11 @@ import java.io.IOException;
 public class CustomWarToPpmCallServlet extends HttpServlet {
 
     @Override
-    protected void service(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
 
         PpmConfig config = new PpmConfig(getServletContext());
+
+        resp.getWriter().write("customWars.properties: "+ config.getProperties().toString());
     }
 
 }

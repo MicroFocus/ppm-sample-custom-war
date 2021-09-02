@@ -64,7 +64,18 @@
         <p>There are <%= enabledUsersCount %> users in PPM.</p>
 
         <p>Even if the Datasource lets you run any type of query against PPM Database, you should refrain from updating data directly in database. All data-modifying operations should be performed through REST APIs when available.</p>
+
+        <h3>Check if a call to the custom WAR is made with a valid PPM session</h3>
+        <p>Any call made by the UI to <BASE_URL>/itg/rest2/customWars/your_war_name/* will be forwarded automatically to <BASE_URL>/your_war_name/* , but with an extra JWT token added that contains info of the PPM user currently logged in. </p>
+        <p>You can then verify this JWT signature against the public key included in customWars.properties in property security.oauth2.resource.jwt.key-value.</p>
+        <p>This can be a simple way to ensure that all calls made against your custom wars are done from valid PPM users - useful if you want to leverage PPM authentication mechanism instead of building your own.</p>
+        <p>You can try this on the custom WAR by making a call to PPM_BASE_URL/itg/rest2/customWars/ppm-sample-custom-war/ppmJWTVerificationServlet/ . Source code of this servlet is <a href="">here</a>.
+        <p></p>
         <h3>Server-side REST Calls</h3>
+        <p>In order to do a server-side REST API call to PPM, you will need to authenticate. If the custom Web App is access by a user from a browser with an existing PPM session, you can retrieve the PPM internal JWT Token in order to make a server-side call authenticated as the same user.</p>
+
+
+        <p>You can also use standard authentication - it's advised to use API Keys in order to be able to authenticate even when users use SSO. </p>
 
    </body>
 </html>

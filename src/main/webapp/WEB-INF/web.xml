@@ -13,4 +13,15 @@
     <servlet-name>custom-war-to-ppm-server-call</servlet-name>
     <url-pattern>/serverCallToPpmServer/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ppm-jwt-verification</servlet-name>
+    <servlet-class>com.ppm.custom.war.servlet.PpmJWTVerificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ppm-jwt-verification</servlet-name>
+    <url-pattern>/ppmJWTVerificationServlet/*</url-pattern>
+  </servlet-mapping>
+
+
+
 </web-app>

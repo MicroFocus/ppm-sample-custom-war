@@ -1,10 +1,22 @@
 package com.ppm.custom.war.config;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Verification;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.sql.Connection;
 import java.util.Properties;
 
@@ -20,6 +32,8 @@ public class PpmConfig {
     private static final String PPM_JNDI_DS = "ppm.datasource.jndi-name";
     private static final String PPM_REPORTING_DS = "ppm.datasource.jndi-name";
     private static final String PPM_LOCAL_URL = "ppm.base-url";
+    private static final String JWT_KEY_BASE_64 = "ppm.internal.jwt.encoded.public.key";
+
 
 
     private Properties props;
@@ -105,4 +119,22 @@ public class PpmConfig {
         }
     }
 
+    public RSAPublicKey getJWTPublicKey() {
+        String base64PublicKey = getProperty(JWT_KEY_BASE_64);
+
+        try {
+            byte[] pkEncoded = DatatypeConverter.parseBase64Binary(base64PublicKey);
+            RSAPublicKey publicKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(pkEncoded));
+            return publicKey;
+        } catch (Exception e) {
+            throw new RuntimeException("Error decoding PPM Public JWT Key", e);
+        }
+    }
+
+    public void verifyPpmJWTBearerToken(String bearerToken) {
+        Algorithm ppmAlgorithm = Algorithm.RSA256(getJWTPublicKey(), null);
+        Verification verification = JWT.require(ppmAlgorithm)
+                .acceptLeeway(30);
+        verification.build().verify(bearerToken);
+    }
 }
