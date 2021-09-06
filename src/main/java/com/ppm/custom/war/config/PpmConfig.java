@@ -31,7 +31,7 @@ public class PpmConfig {
 
     private static final String PPM_JNDI_DS = "ppm.datasource.jndi-name";
     private static final String PPM_REPORTING_DS = "ppm.datasource.jndi-name";
-    private static final String PPM_LOCAL_URL = "ppm.base-url";
+    private static final String PPM_LOCAL_URL = "ppm.local.base.url";
     private static final String JWT_KEY_BASE_64 = "ppm.internal.jwt.encoded.public.key";
 
 
@@ -94,6 +94,15 @@ public class PpmConfig {
      */
     public String getPPMLocalUrl() {
         return getProperty(PPM_LOCAL_URL);
+    }
+
+    /**
+     *
+     * @param rest2Url
+     * @return the full URL to make a local call on /itg/rest2/* . So passing "ping" will return "http:127.0.0.1:port/itg/rest2/ping"
+     */
+    public String getPPMRest2Url(String rest2Url) {
+        return getPPMLocalUrl() + "rest2/" + rest2Url;
     }
 
     /**
