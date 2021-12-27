@@ -9,6 +9,12 @@
     <servlet-name>custom-war-to-ppm-server-call</servlet-name>
     <servlet-class>com.ppm.custom.war.servlet.CustomWarToPpmCallServlet</servlet-class>
   </servlet>
+
+  <servlet>
+    <servlet-name>powerpointServlet</servlet-name>
+    <servlet-class>com.ppm.custom.war.servlet.PowerPointServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>custom-war-to-ppm-server-call</servlet-name>
     <url-pattern>/serverCallToPpmServer/*</url-pattern>
@@ -20,6 +26,11 @@
   <servlet-mapping>
     <servlet-name>ppm-jwt-verification</servlet-name>
     <url-pattern>/ppmJWTVerificationServlet/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>powerpointServlet</servlet-name>
+    <url-pattern>/powerpointServlet</url-pattern>
   </servlet-mapping>
 
 

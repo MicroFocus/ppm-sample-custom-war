@@ -20,12 +20,12 @@
       </p>
       <script>
          // Demo basic JS code to make calls to PPM Server from the browser. If user is already in PPM, no authentication is required.
-         let xmlhttp = new XMLHttpRequest();
+         let userxmlhttp = new XMLHttpRequest();
 
-         xmlhttp.onreadystatechange = function() {
-                 if (xmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
-                         if (xmlhttp.status == 200) {
-                                 let userInfo = JSON.parse(xmlhttp.responseText);
+         userxmlhttp.onreadystatechange = function() {
+                 if (userxmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+                         if (userxmlhttp.status == 200) {
+                                 let userInfo = JSON.parse(userxmlhttp.responseText);
                                  document.getElementById('username-field').textContent = userInfo.username;
                                  document.getElementById('user-id-field').textContent = userInfo.userId;
                                  document.getElementById('full-name-field').textContent = userInfo.fullName;
@@ -34,8 +34,8 @@
                  }
          };
 
-         xmlhttp.open("GET", "/itg/web/new/user-profile.jsp", true);
-         xmlhttp.send();
+         userxmlhttp.open("GET", "/itg/web/new/user-profile.jsp", true);
+         userxmlhttp.send();
       </script>
       <h3>Querying PPM Database</h3>
       <p>The JNDI Datasources for PPM Database and (if configured) Reporting Database are available to your custom WAR. The corresponding JNDI names are provided in customWars.properties, that can be easily accessed through class <a href="https://github.com/MicroFocus/ppm-sample-custom-war/blob/main/src/main/java/com/ppm/custom/war/config/PpmConfig.java">PpmConfig</a>.</p>
@@ -116,19 +116,19 @@
       <p>One of these calls will retrieve the PPM Version from /itg/rest2/version, which is displayed here: <span id="ppm-version-span"></span></p>
       <script>
          // Following code retrieve data from a custom WAR servlet, which will make the REST calls on the backend - but with a new PPM Session.
-         xmlhttp = new XMLHttpRequest();
+         let versionxmlhttp = new XMLHttpRequest();
 
-         xmlhttp.onreadystatechange = function() {
-             if (xmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
-                 if (xmlhttp.status == 200) {
-                     let ppmVersion = JSON.parse(xmlhttp.responseText);
+         versionxmlhttp.onreadystatechange = function() {
+             if (versionxmlhttp.readyState == XMLHttpRequest.DONE) {   // XMLHttpRequest.DONE == 4
+                 if (versionxmlhttp.status == 200) {
+                     let ppmVersion = JSON.parse(versionxmlhttp.responseText);
                      document.getElementById('ppm-version-span').textContent = ppmVersion.majorVersion+"."+ppmVersion.minorVersion+"."+ppmVersion.minorMinorVersion;
                  }
              }
          };
 
-         xmlhttp.open("GET", "/itg/rest2/customWarsJWTProvider/ppm-sample-custom-war/serverCallToPpmServer/", true);
-         xmlhttp.send();
+         versionxmlhttp.open("GET", "/itg/rest2/customWarsJWTProvider/ppm-sample-custom-war/serverCallToPpmServer/", true);
+         versionxmlhttp.send();
       </script>
       <p>Both "PPM-Internal" and "PPM-Custom-War" JWTs will expire 5 minutes after they're issued (<i>plus a 30 seconds leeway for validation</i>) and as such should not be stored for future usage. So we only provide a supported way to authenticate for a PPM User through JWT on server-side if that user is already authenticated in PPM.</p>
    </body>
